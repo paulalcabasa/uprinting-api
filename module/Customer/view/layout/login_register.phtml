@@ -1,0 +1,72 @@
+<?php 
+    $registerAction = $this->url('customer-login'); 
+    $authenticateAction = $this->url('customer-authenticate'); 
+
+?>
+
+
+<div class="page-subheader">
+    <span>Login / Register</span>
+</div>
+
+<div class="login-wrapper">
+    <div class="row">
+        <div class="col-md-6 border-right">
+            <form method="post" class="form" action="<?= $registerAction;?>">
+                <div class="form-group">
+                    <label for="">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" value="<?php echo isset($form['email']) ? $form['email'] : '';?>" />
+                    <small class="text-danger"><?php echo (isset($errors[0]['email']['isEmpty'])) ? $errors[0]['email']['isEmpty'] : '';?></small>
+                    <small class="text-danger"><?php echo (isset($mailExist)) ? $mailExist : '';?></small>
+                </div>
+                <div class="form-group">
+                    <label for="">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" value="<?php echo isset($form['password']) ? $form['password'] : '';?>" />
+                    <small class="text-danger"><?php echo (isset($errors[0]['password']['isEmpty'])) ? $errors[0]['password']['isEmpty'] : '';?></small>
+                </div>
+                <div class="form-group">
+                    <label for="">Confirm Password</label>
+                    <input type="password" id="confirm_password" name="confirm_password" class="form-control" value="<?php echo isset($form['confirm_password']) ? $form['confirm_password'] : '';?>"  />
+                    <small class="text-danger"><?php echo (isset($errors[0]['confirm_password']['isEmpty'])) ? $errors[0]['confirm_password']['isEmpty'] : '';?></small>
+                    <small class="text-danger"><?php echo (isset($errors[0]['confirm_password']['notSame'])) ? 'Passwords does not match.' : '';?></small>
+                </div>
+                <div class="form-group">
+                    <label for="">Company Name</label>
+                    <input type="text" id="company_name" name="company_name" class="form-control" value="<?php echo isset($form['company_name']) ? $form['company_name'] : '';?>" />
+                </div>
+                <div class="form-group">
+                    <label for="">First Name</label>
+                    <input type="text" id="first_name" name="first_name" class="form-control" value="<?php echo isset($form['first_name']) ? $form['first_name'] : '';?>"  />
+                    <small class="text-danger"><?php echo (isset($errors[0]['first_name']['isEmpty'])) ? $errors[0]['first_name']['isEmpty'] : '';?></small>
+                    
+                </div>
+                <div class="form-group">
+                    <label for="">Last Name</label>
+                    <input type="text" id="last_name" name="last_name" class="form-control" value="<?php echo isset($form['last_name']) ? $form['last_name'] : '';?>"  />
+                    <small class="text-danger"><?php echo (isset($errors[0]['last_name']['isEmpty'])) ? $errors[0]['last_name']['isEmpty'] : '';?></small>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success btn-register">Register</button>
+                </div>
+            </form>    
+        </div>  
+        <div class="col-md-6">
+            <?php if(isset($failedAuthMessage)) { ?>
+            <div class="alert alert-danger alert-sm"><?php echo $failedAuthMessage; ?></div>
+            <?php } ?>
+            <form method="post" class="form" action="<?= $authenticateAction;?>">
+                <div class="form-group">
+                    <label for="">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label for="">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" required />
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success btn-login">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
