@@ -15,31 +15,42 @@ use Zend\View\Model\JsonModel;
 use Order\Model\Shipping;
 use Order\Model\ShippingTable;
 
+use Cart\Model\CartItem;
+use Cart\Model\CartItemTable;
+
 class ShippingController extends AppAbstractRestfulController
 {   
     private $shipping;
     private $shippingTable;
+
+    private $CartItem;
+    private $CartItemTable;
     
     public function __construct(
         Shipping $shipping,
-        ShippingTable $shippingTable
+        ShippingTable $shippingTable,
+        CartItem $cartItem,
+        CartItemTable $cartItemTable
     )
     {
        
         $this->shippingTable = $shippingTable;
         $this->shipping = $shipping;
+
+        $this->CartItem = $cartItem;
+        $this->CartItemTable = $cartItemTable;
         
         // $this->cartId = $this->cartSessionContainer->cartId;
         // $this->shippingRates = $this->getShippingRates();
         // $this->totalWeight = $this->computeTotalWeight();
     }
 
-    public function create($cart)
+    public function get($cartId)
     {
 
         $totalWeight = 0;
 
-        
+     
 
         //get shipping rates from database
         $ratesTable = $this->shippingTable->getShipping();
@@ -48,13 +59,11 @@ class ShippingController extends AppAbstractRestfulController
             $shippingRates[$value->shipping_method][] = $value;
         }
         
+        // cart items
+        $cartItems = $this->CartItemTable->getByCartId($cartId);
         // parse cart items from local storage to get weight
-        foreach($cart as $item => $products) {
-            $products = json_decode($products);
-            foreach($products as $product) {
-                $product = (object) $product;
-                $totalWeight += ($product->weight * $product->qty);
-            }
+        foreach($cartItems as $item) {
+           $totalWeight += ($item['weight'] * $item['qty']);
         }
 
         $weightBalance = [
@@ -119,6 +128,11 @@ class ShippingController extends AppAbstractRestfulController
                 }   
             }   
         }
+
+        // service is used for unit testing
+
+        // 
+
 
         return new JsonModel([
             'totalWeight' => $totalWeight,

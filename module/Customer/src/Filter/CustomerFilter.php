@@ -133,26 +133,8 @@ class CustomerFilter extends InputFilter
             )
         );
 
-        // $this->filters = array(
-        //     'email' => ,
-        //     'password' => ,
-        //     'confirm_password' => 
-            
-        //     'first_name' => ,
-        //     'last_name' => 
-        // );
+       
     }
 
-    // public function setInputFilter($formData)
-    // {
-    //     if ($formData) {
-    //         $inputFields = array_keys($formData);
 
-    //         foreach ($inputFields as $key) {
-    //             if (isset($this->filters[$key])) {
-    //                 $this->add($this->filters[$key]);
-    //             }
-    //         }
-    //     }
-    // }
 }

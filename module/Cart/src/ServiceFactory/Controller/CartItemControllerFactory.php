@@ -3,7 +3,7 @@
 
 namespace Cart\ServiceFactory\Controller;
 
-use Cart\Controller\CartController;
+use Cart\Controller\CartItemController;
 
 use Cart\Model\Cart;
 use Cart\Model\CartTable;
@@ -18,7 +18,7 @@ use Product\Model\ProductTable;
 
 use Interop\Container\ContainerInterface;
 
-class CartControllerFactory
+class CartItemControllerFactory
 {
     public function __invoke(ContainerInterface $container)
     {
@@ -33,8 +33,9 @@ class CartControllerFactory
         $productTable = $serviceLocator->get(ProductTable::class);
         $product = $serviceLocator->get(Product::class);
 
-    //    $CartIdFilter = $serviceLocator->get(CartIdFilter::class);
-        return new CartController(
+      //  $CartIdFilter = $serviceLocator->get(CartIdFilter::class);
+      
+        return new CartItemController(
             $cartTable,
             $cart,
             
@@ -44,7 +45,7 @@ class CartControllerFactory
             $productTable,
             $product
             
-         //   $CartIdFilter
+          //  $CartIdFilter
         );
     }
 }

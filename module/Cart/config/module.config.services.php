@@ -11,43 +11,31 @@ use Cart\ServiceFactory\Model\CartItemTableFactory;
 
 use Cart\Controller\CartController;
 use Cart\ServiceFactory\Controller\CartControllerFactory;
-use Cart\Controller\ShippingController;
-use Cart\ServiceFactory\Controller\ShippingControllerFactory;
 
+use Cart\Controller\CartItemController;
+use Cart\ServiceFactory\Controller\CartItemControllerFactory;
 
-use Cart\ServiceFactory\Storage\CartSessionFactory;
-use Cart\ServiceFactory\ViewHelper\CartViewFactory;
-
-use Customer\ServiceFactory\Storage\CustomerSessionFactory;
-
-use Product\Model\Product;
-use Product\Model\ProductTable;
-use Product\ServiceFactory\Model\ProductTableFactory;
+// use Product\Model\Product;
+// use Product\Model\ProductTable;
+// use Product\ServiceFactory\Model\ProductTableFactory;
 
 return array(
     'controllers' => [
         'factories' => [
             CartController::class => CartControllerFactory::class,
-            ShippingController::class => ShippingControllerFactory::class
+            CartItemController::class => CartItemControllerFactory::class,
         ]
     ],
     'service_manager' => [
         'invokables' => [
             Cart::class => Cart::class,
             CartItem::class => CartItem::class,
-            Product::class => Product::class
+       //     Product::class => Product::class
         ],
         'factories' => [
             CartTable::class => CartTableFactory::class,
             CartItemTable::class => CartItemTableFactory::class,
-           'CartSessionContainer' => CartSessionFactory::class,
-           'CustomerSessionContainer' => CustomerSessionFactory::class,
-            ProductTable::class => ProductTableFactory::class
-        ]
-    ],
-    'view_helpers' => [
-        'factories' => [
-            'cart' => CartViewFactory::class
+           // ProductTable::class => ProductTableFactory::class
         ]
     ],
     'view_manager' => array(

@@ -12,7 +12,7 @@ return array(
             'get-shipping' => [
                 'type'    => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
-                    'route'    => '/shipping',
+                    'route'    => '/shipping[/:id]',
                     'defaults' => array(
                         'controller' => ShippingController::class
                     ),

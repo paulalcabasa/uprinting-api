@@ -18,22 +18,24 @@ use Auth\Service\TokenService;
 class CustomerController extends AppAbstractRestfulController
 {   
 
+    // these are classes and must be capitalized
     private $customerTable;
-    private $customer;
+    private $Customer;
     private $customerFilter;
     private $loginFilter;
     private $tokenService;
 
     public function __construct(
+        // for parameter oks lang camel case
         CustomerTable $customerTable,
-        Customer $customer,
+        Customer $Customer,
         CustomerFilter $customerFilter,
         LoginFilter $loginFilter,
         TokenService $tokenService
     )
     {
         $this->customerTable = $customerTable;
-        $this->customer = $customer;
+        $this->Customer = $customer;
         $this->customerFilter = $customerFilter;
         $this->loginFilter = $loginFilter;
         $this->tokenService = $tokenService;
@@ -44,7 +46,8 @@ class CustomerController extends AppAbstractRestfulController
     
         $errors = [];
 
-        $this->customer->exchangeArray($data);
+        $this->Customer->exchangeArray($data);
+        
         $this->customerFilter->setData($this->customer->getArrayCopy());
     
         if (!$this->customerFilter->isValid()) {

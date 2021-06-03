@@ -20,7 +20,8 @@
             "Product\\": "module/Product/src/",
             "Customer\\": "module/Customer/src/",
             "Auth\\": "module/Auth/src/",
-            "Order\\": "module/Order/src/"
+            "Order\\": "module/Order/src/",
+            "Cart\\": "module/Cart/src/"
         }
     }
 }
