@@ -11,7 +11,8 @@ return array(
         'Application',
         'Product',
         'Customer',
-        'Auth'
+        'Auth',
+        'Order'
     ),
 
     // These are various options for the listeners attached to the ModuleManager

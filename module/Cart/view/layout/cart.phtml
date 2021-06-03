@@ -1,0 +1,125 @@
+<?php if(count($cart) == 0) { ?>
+<h6 class="text-center">Your cart is empty. <a href="<?php echo $this->basePath('/')?>">Add now!</a></h6> 
+<?php } else { ?>
+
+<?php
+    $removeCartItem = $this->url('customer-authenticate'); 
+?>
+<div class="cart-header mobile-hidden">
+    <div class="row">
+        <div class="col-md-3"><span class="pl-2">Product</span></div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3 text-center pr-5">Quantity</div>
+        <div class="col-md-3 text-right cart-price">Price</div>
+    </div>
+</div>
+
+<?php 
+    $subtotal = 0;
+    $totalWeight = 0;
+    foreach($cart as $item) {
+        $subtotal += $item['price'] * $item['qty']; 
+?>
+<div class="cart-box">
+    <div class="row">
+        <div class="col-md-3">
+            <img class="img-fluid" src="<?php echo $this->basePath() . '/' . $item['product_thumbnail'];?>" alt=""/>
+        </div>
+        <div class="col-md-3">
+            <h6 class="mb-3"><?php echo $item['product_name'];?></h6>
+            <p class="mb-2"><?php echo $item['product_desc']; ?></p>
+            <span class="cart-product-price">$<?php echo $item['unit_price']; ?> each</span>
+ 
+            <a href="#" class="remove-item" data-cart-item-id="<?php echo $item['cart_item_id']?>">Remove item</a>
+        </div>
+        <div class="col-md-3 text-right pr-5">
+            <input type="text" 
+                class="form-control input-sm cart-item-qty" 
+                value="<?php echo $item['qty'];?>" 
+                data-cart-item-id="<?php echo $item['cart_item_id']?>" 
+                data-unit-price="<?php echo $item['unit_price']; ?>" 
+                data-product-id="<?php echo $item['product_id']; ?>" 
+            />
+        </div>
+        <div class="col-md-3 text-right pr-5">$ <?php echo $item['price'];?></div>
+    </div>
+</div>
+
+<?php } ?>
+
+<div class="total">
+    <div class="row">
+        <div class="ml-md-auto col-md-4 pr-5">
+            <div class="row mb-3">
+                <div class="col-md-6 col-sm-12">Subtotal</div>
+                <div class="col-md-6 col-sm-12 currency-label">$ <?php echo number_format($subtotal,2); ?></div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-md-6 col-sm-12">Shipping</div>
+                <div class="col-md-6 col-sm-12 currency-label">0</div>
+            </div>
+            <div class="row mb-5 font-weight-bold text-danger">
+                <div class="col-md-6">Grand Total</div>
+                <div class="col-md-6 currency-label">$ <?php echo number_format($subtotal,2); ?></div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="<?php echo $this->basePath('shipping');?>" class="btn btn-success btn-block">Checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php } ?>
+<script>
+var baseUrl = <?php echo json_encode($this->basePath());?>;
+
+$(document).ready(function(){
+    $(".remove-item").click(function(ev){
+        
+        ev.preventDefault();
+
+        var params = {
+            cartItemId : $(this).data('cart-item-id'),
+            cartItem : $(this).data('cartItem')
+        };
+  
+        $.ajax({
+            method: 'POST',
+            url : baseUrl + '/api/cart/remove',
+            data : params,
+            type :'JSON'
+        }).done(function(response){
+            
+            window.location.reload();
+        });
+    });
+
+    $("body").on('blur','.cart-item-qty', function(){
+    
+        var params = {
+            cartItemId : $(this).data('cart-item-id'),
+            qty : $(this).val(),
+            unitPrice : $(this).data('unit-price'),
+            productId : $(this).data('product-id'),
+        };
+        
+        var elem = $(this);
+
+        $.ajax({
+            method: 'POST',
+            url : baseUrl + '/api/cart-item/update',
+            data : params,
+            type :'JSON'
+        }).done(function(response){
+            if(!response.success){
+                alert(response.message);
+              //  window.location.reload();
+            }
+            window.location.reload();
+           
+        });
+        
+    });
+});
+</script>

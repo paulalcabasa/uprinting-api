@@ -17,6 +17,15 @@ return array(
                     ),
                 ),
             ],
+            'create-customer' => [
+                'type'    => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/customer',
+                    'defaults' => array(
+                        'controller' => CustomerController::class
+                    ),
+                ),
+            ],
         ]
     ]
 );

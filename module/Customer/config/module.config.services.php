@@ -9,6 +9,8 @@ use Customer\Model\CustomerTable;
 use Customer\ServiceFactory\Controller\CustomerControllerFactory;
 use Customer\ServiceFactory\Model\CustomerTableFactory;
 
+use Auth\Service\TokenService;
+use Auth\ServiceFactory\Service\TokenServiceFactory;
 
 return array(
     'controllers' => [
@@ -23,7 +25,8 @@ return array(
             LoginFilter::class => LoginFilter::class,
         ],
         'factories' => [
-            CustomerTable::class => CustomerTableFactory::class
+            CustomerTable::class => CustomerTableFactory::class,
+            TokenService::class => TokenServiceFactory::class
         ]
     ],
     'view_manager' => array(

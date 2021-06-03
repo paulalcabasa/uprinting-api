@@ -1,0 +1,62 @@
+<?php $orderAction = $this->url('order-confirmation');  ?>
+<div class="page-subheader">
+    <span>Shipping</span>
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="col-lg-8">
+        <form action="<?= $orderAction; ?>" method="POST" class="form">
+            <div class="form-group">
+                <label for="shippingName">Name</label>
+                <input type="text" id="shippingName" name="shippingName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="shippingAddress1">Address 1</label>
+                <input type="text" id="shippingAddress1" name="shippingAddress1" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="shippingAddress2">Address 2</label>
+                <input type="text" id="shippingAddress2" name="shippingAddress2" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="shippingAddress3">Address 3</label>
+                <input type="text" id="shippingAddress3" name="shippingAddress3" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" name="city" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="state">State</label>
+                <input type="text" id="state" name="state" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="country">Country</label>
+                <input type="text" id="country" name="country" class="form-control" />
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="custom-control custom-radio mb-3">
+                        <input type="radio" id="groundRadio" name="shippingMethod" class="custom-control-input">
+                        <label class="custom-control-label" for="groundRadio"><span class="shipping-type">Ground Shipping</span></label>
+                    </div>
+                </div>
+                <div class="col-md-6">$20</div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="custom-control custom-radio mb-3">
+                        <input type="radio" id="expeditedRadio" name="shippingMethod" class="custom-control-input">
+                        <label class="custom-control-label" for="expeditedRadio"><span class="shipping-type">Expedited Shipping</span></label>
+                    </div>
+                </div>
+                <div class="col-md-6">$40</div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-success btn-shipping">Continue</button>
+            </div>
+        </form> 
+    </div>
+<div class="row justify-content-md-center">

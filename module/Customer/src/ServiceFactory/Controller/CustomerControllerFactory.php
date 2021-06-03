@@ -10,6 +10,7 @@ use Customer\Filter\LoginFilter;
 use Customer\Model\Customer;
 use Customer\Model\CustomerTable;
 use Interop\Container\ContainerInterface;
+use Auth\Service\TokenService;
 
 class CustomerControllerFactory
 {
@@ -21,12 +22,14 @@ class CustomerControllerFactory
   		$customer = $serviceLocator->get(Customer::class);
         $customerFilter = $serviceLocator->get(CustomerFilter::class);
         $loginFilter = $serviceLocator->get(LoginFilter::class);
-     
+        $tokenService = $serviceLocator->get(TokenService::class);
+
         return new CustomerController(
 			$customerTable,
             $customer,
             $customerFilter,
-            $loginFilter
+            $loginFilter,
+            $tokenService
         );
     }
 }
