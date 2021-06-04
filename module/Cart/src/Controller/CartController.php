@@ -47,7 +47,6 @@ class CartController extends AppAbstractRestfulController
 
         ProductTable $productTable,
         Product $product
-        //CartIdFilter $cartIdFilter
     )
     {
         $this->CartTable = $cartTable;
@@ -65,6 +64,20 @@ class CartController extends AppAbstractRestfulController
     public function create($data)
     {
         
+        // check from products if there is stock
+        $product = $this->ProductTable->getProduct($data['product']['product_id']);
+        
+    
+        if(intval($data['quantity']) < intval($product->stock_qty) ) {
+            return new JsonModel([
+                'state' => false,
+                'message' => 'Insufficient quantity',
+                'entered qty' => $data['quantity'],
+                'stock qty' => intval($product->stock_qty)
+            ]);
+        }
+    
+
         $cartId = $data['cartId'];
 
         if(!$data['cartId']){

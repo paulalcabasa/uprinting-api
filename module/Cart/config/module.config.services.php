@@ -30,12 +30,12 @@ return array(
         'invokables' => [
             Cart::class => Cart::class,
             CartItem::class => CartItem::class,
-       //     Product::class => Product::class
+            Product::class => Product::class
         ],
         'factories' => [
             CartTable::class => CartTableFactory::class,
             CartItemTable::class => CartItemTableFactory::class,
-           // ProductTable::class => ProductTableFactory::class
+            ProductTable::class => ProductTableFactory::class
         ]
     ],
     'view_manager' => array(
