@@ -34,7 +34,7 @@ class Cart
     {
 
         $this->cart_id = isset($data['cart_id']) ? $data['cart_id'] : null;
-        $this->customer_id = isset($data['customer_id']) ? $data['customer_id'] : null;
+        $this->customer_id = isset($data['customer_id']) ? $data['customer_id'] : 0;
         $this->order_datetime = isset($data['order_datetime']) ? $data['order_datetime'] : date('Y-m-d H:i:s');
         $this->sub_total = isset($data['sub_total']) ? $data['sub_total'] : 0;
         $this->taxable_amount = isset($data['taxable_amount']) ? $data['taxable_amount'] : 0;

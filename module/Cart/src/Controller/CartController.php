@@ -70,7 +70,7 @@ class CartController extends AppAbstractRestfulController
         if(!$data['cartId']){
            
             $this->Cart->exchangeArray([
-                'customer_id' => $data['customerId']
+                'customer_id' => 0
             ]);
                 
             $cartId = $this->CartTable->insertCart($this->Cart->getArrayCopy());

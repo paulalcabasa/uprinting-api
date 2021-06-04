@@ -19,26 +19,26 @@ class CustomerController extends AppAbstractRestfulController
 {   
 
     // these are classes and must be capitalized
-    private $customerTable;
+    private $CustomerTable;
     private $Customer;
-    private $customerFilter;
-    private $loginFilter;
-    private $tokenService;
+    private $CustomerFilter;
+    private $LoginFilter;
+    private $TokenService;
 
     public function __construct(
         // for parameter oks lang camel case
         CustomerTable $customerTable,
-        Customer $Customer,
+        Customer $customer,
         CustomerFilter $customerFilter,
         LoginFilter $loginFilter,
         TokenService $tokenService
     )
     {
-        $this->customerTable = $customerTable;
+        $this->CustomerTable = $customerTable;
         $this->Customer = $customer;
-        $this->customerFilter = $customerFilter;
-        $this->loginFilter = $loginFilter;
-        $this->tokenService = $tokenService;
+        $this->CustomerFilter = $customerFilter;
+        $this->LoginFilter = $loginFilter;
+        $this->TokenService = $tokenService;
     }
 
     public function create($data)
@@ -48,16 +48,17 @@ class CustomerController extends AppAbstractRestfulController
 
         $this->Customer->exchangeArray($data);
         
-        $this->customerFilter->setData($this->customer->getArrayCopy());
+        $this->CustomerFilter->setData($this->Customer->getArrayCopy());
     
-        if (!$this->customerFilter->isValid()) {
+
+        if (!$this->CustomerFilter->isValid()) {
             return new JsonModel([
                 'state' => false,
-                'errors' => $this->customerFilter->getMessages()
+                'errors' => $this->CustomerFilter->getMessages()
             ]);
         }
 
-        $isExist = $this->customerTable->isExist($this->customer->email);
+        $isExist = $this->CustomerTable->isExist($this->Customer->email);
         
         if($isExist) {
             return new JsonModel([
@@ -68,18 +69,18 @@ class CustomerController extends AppAbstractRestfulController
             ]);
         }
 
-        $form = $this->customer->getArrayCopy();
+        $form = $this->Customer->getArrayCopy();
         
         // remove cause this is not stored in db
         unset($form['confirm_password']);
 
-        $customerId = $this->customerTable->insertCustomer($form);
+        $customerId = $this->CustomerTable->insertCustomer($form);
                     
         if ($customerId) {
 
-            $token = $this->tokenService->generateToken([
+            $token = $this->TokenService->generateToken([
                 "customer_id" => $customerId,
-                "first_name" => $this->customer->first_name]);
+                "first_name" => $this->Customer->first_name]);
     
             return new JsonModel([
                 'state' => true,
