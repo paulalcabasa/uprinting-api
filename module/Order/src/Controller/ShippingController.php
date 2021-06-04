@@ -129,11 +129,6 @@ class ShippingController extends AppAbstractRestfulController
             }   
         }
 
-        // service is used for unit testing
-
-        // 
-
-
         return new JsonModel([
             'totalWeight' => $totalWeight,
             'ratesPerMethod' => $ratesPerMethod

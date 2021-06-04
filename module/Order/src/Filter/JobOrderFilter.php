@@ -16,8 +16,9 @@ class JobOrderFilter extends InputFilter
 
     public function __construct()
     {
-        $this->filters = array(
-            'shipping_name' => array(
+
+        $this->add(
+            array(
                 'name' => 'shipping_name',
                 'required' => true,
                 'filters' => array(
@@ -41,8 +42,11 @@ class JobOrderFilter extends InputFilter
                         )
                     )
                 ),
-            ),
-            'shipping_address1' => array(
+            )
+        );
+        
+        $this->add(
+            array(
                 'name' => 'shipping_address1',
                 'required' => true,
                 'filters' => array(
@@ -54,21 +58,23 @@ class JobOrderFilter extends InputFilter
                         'name' => NotEmpty::class,
                         'options' => array(
                             'messages' => array(
-                                NotEmpty::IS_EMPTY => 'Address 1 is required.',
+                                NotEmpty::IS_EMPTY => 'Shipping Name is required.',
                             )
                         ),
                         'break_chain_on_failure' => true
-                    )
-                    ,
+                    ),
                     array(
-                        'name' => 'stringLength',
+                        'name' => StringLength::class,
                         'options' => array(
                             'max' => 35
                         )
                     )
                 ),
-            ),
-            'shipping_city' => array(
+            )
+        );
+
+        $this->add(
+            array(
                 'name' => 'shipping_city',
                 'required' => true,
                 'filters' => array(
@@ -92,9 +98,12 @@ class JobOrderFilter extends InputFilter
                             'max' => 35
                         )
                     )
-                ),
-            ),
-            'shipping_state' => array(
+                )
+            )
+        );
+
+        $this->add(
+            array(
                 'name' => 'shipping_state',
                 'required' => true,
                 'filters' => array(
@@ -119,8 +128,11 @@ class JobOrderFilter extends InputFilter
                         )
                     )
                 ),
-            ),
-            'shipping_country' => array(
+            )
+        );
+
+        $this->add(
+            array(
                 'name' => 'shipping_country',
                 'required' => true,
                 'filters' => array(
@@ -147,19 +159,7 @@ class JobOrderFilter extends InputFilter
                 ),
                 
             )
-        );
+        );     
     }
 
-    public function setInputFilter($formData)
-    {
-        if ($formData) {
-            $inputFields = array_keys($formData);
-
-            foreach ($inputFields as $key) {
-                if (isset($this->filters[$key])) {
-                    $this->add($this->filters[$key]);
-                }
-            }
-        }
-    }
 }

@@ -30,6 +30,17 @@ class CustomerTable
         return $this->tableGateway->selectWith($select)->current();
     }
 
+    public function getByCustomerId($customer_id)
+    {
+        $select = $this->tableGateway->getSql()->select();
+        $select->where(
+            [
+                'customer_id' => $customer_id
+            ]
+        );
+        return $this->tableGateway->selectWith($select)->current();
+    }
+
     public function getCustomers()
     {
         $select = $this->tableGateway->getSql()->select();

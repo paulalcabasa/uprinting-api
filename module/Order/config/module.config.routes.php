@@ -18,6 +18,15 @@ return array(
                     ),
                 ),
             ],
+            'order' => [
+                'type'    => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/order[/:id]',
+                    'defaults' => array(
+                        'controller' => OrderController::class
+                    ),
+                ),
+            ],
             // 'shipping-info' => [
             //     'type' => Literal::class,
             //     'options' => [

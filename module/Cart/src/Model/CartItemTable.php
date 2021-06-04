@@ -2,6 +2,7 @@
 
 namespace Cart\Model;
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\ResultSet\Resultset;
 
 class CartItemTable
 {
@@ -54,8 +55,12 @@ class CartItemTable
                     LEFT JOIN products product
                         ON product.product_id = item.product_id
                 WHERE cart_id = " . $cartId;
-        $stmt = $this->tableGateway->getAdapter()->driver->getConnection()->execute($sql);
-        return $stmt;
+        $result = $this->tableGateway->getAdapter()->driver->getConnection()->execute($sql);
+        
+        $resultSet = new ResultSet();
+        $resultSet->initialize($result);
+        $result = $resultSet->toArray();
+        return $result;
     }
 
     public function deleteItem($id)

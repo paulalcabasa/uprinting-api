@@ -2,6 +2,7 @@
 
 namespace Order\Model;
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\ResultSet\Resultset;
 
 class JobItemtable
 {
@@ -33,8 +34,12 @@ class JobItemtable
                     LEFT JOIN products product
                         ON product.product_id = item.product_id
                 WHERE job_order.job_order_id = " . $id;
-        $stmt = $this->tableGateway->getAdapter()->driver->getConnection()->execute($sql);
-        return $stmt;
+        $result = $this->tableGateway->getAdapter()->driver->getConnection()->execute($sql);
+     
+        $resultSet = new ResultSet();
+        $resultSet->initialize($result);
+        $result = $resultSet->toArray();
+        return $result;
     }
 
 }
