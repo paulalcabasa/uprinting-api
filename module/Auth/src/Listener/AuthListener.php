@@ -23,7 +23,7 @@ EOD;
         $isValid = false;
 
         $authHeader = $mvcEvent->getRequest()->getHeader('Authorization');
-
+ 
         if (!empty($authHeader)) {
             $arrAuthHeader = explode(" ", $authHeader->getFieldValue());
 

@@ -67,17 +67,15 @@ class CartController extends AppAbstractRestfulController
         // check from products if there is stock
         $product = $this->ProductTable->getProduct($data['product']['product_id']);
         
-    
-        if(intval($data['quantity']) < intval($product->stock_qty) ) {
+        if(intval($data['quantity']) > intval($product->stock_qty) ) {
             return new JsonModel([
                 'state' => false,
-                'message' => 'Insufficient quantity',
+                'message' => 'Insufficient stock.',
                 'entered qty' => $data['quantity'],
                 'stock qty' => intval($product->stock_qty)
             ]);
         }
     
-
         $cartId = $data['cartId'];
 
         if(!$data['cartId']){
