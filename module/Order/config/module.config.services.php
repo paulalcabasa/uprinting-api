@@ -41,6 +41,10 @@ use Customer\ServiceFactory\Model\CustomerTableFactory;
 use Auth\Service\TokenService;
 use Auth\ServiceFactory\Service\TokenServiceFactory;
 
+
+use Order\Service\OrderService;
+use Order\ServiceFactory\Service\OrderServiceFactory;
+
 return array(
     'controllers' => [
         'factories' => [
@@ -67,7 +71,8 @@ return array(
             ShippingTable::class => ShippingTableFactory::class,
             CartTable::class => CartTableFactory::class,
             ProductTable::class => ProductTableFactory::class,
-            TokenService::class => TokenServiceFactory::class
+            TokenService::class => TokenServiceFactory::class,
+            OrderService::class => OrderServiceFactory::class,
         ]
     ],
 

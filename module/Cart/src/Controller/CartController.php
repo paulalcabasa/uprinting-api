@@ -65,6 +65,7 @@ class CartController extends AppAbstractRestfulController
     {
         
         // check from products if there is stock
+        // filters for ID
         $product = $this->ProductTable->getProduct($data['product']['product_id']);
         
         if(intval($data['quantity']) > intval($product->stock_qty) ) {
@@ -78,14 +79,22 @@ class CartController extends AppAbstractRestfulController
     
         $cartId = $data['cartId'];
 
+        $customerId = 0;
+
+      
+
         if(!$data['cartId']){
            
             $this->Cart->exchangeArray([
-                'customer_id' => 0
+                'customer_id' => $data['customerId']
             ]);
                 
             $cartId = $this->CartTable->insertCart($this->Cart->getArrayCopy());
         }
+
+        $_SESSION['cartId'] = $cartId;
+
+        
 
         // get cart item
         $cartItem = $this->CartItemTable->getCartItem($cartId, $data['product']['product_id']);
@@ -118,7 +127,8 @@ class CartController extends AppAbstractRestfulController
             return new JsonModel(array(
                 'message' => 'Cart Item inserted!',
                 'cartId' => $cartId,
-                'state' => true
+                'state' => true,
+                'cart session' => $_SESSION['cartId']
             ));
         }
 

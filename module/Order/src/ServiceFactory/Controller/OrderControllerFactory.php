@@ -32,6 +32,7 @@ use Product\Model\Product;
 use Product\Model\ProductTable;
 
 use Auth\Service\TokenService;
+use Order\Service\OrderService;
 
 class OrderControllerFactory
 {
@@ -65,6 +66,7 @@ class OrderControllerFactory
         $customer = $serviceLocator->get(Customer::class);
 
 		$tokenService = $serviceLocator->get(TokenService::class);
+		$orderService = $serviceLocator->get(OrderService::class);
 
 		return new OrderController(
 			$jobOrderTable,
@@ -90,7 +92,8 @@ class OrderControllerFactory
 			$customerTable,
 			$customer,
 
-			$tokenService
+			$tokenService,
+			$orderService
 		);
     }
 }

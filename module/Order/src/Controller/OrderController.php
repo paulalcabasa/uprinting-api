@@ -33,7 +33,7 @@ use Customer\Model\CustomerTable;
 
 use Auth\Service\TokenService;
 
-use Zend\Http\Headers;
+use Order\Service\OrderService;
 
 class OrderController extends AppAbstractRestfulController
 {   
@@ -64,7 +64,7 @@ class OrderController extends AppAbstractRestfulController
   
     private $TokenService;
 
-    private $key;
+    private $OrderService;
 
     public function __construct(
         JobOrderTable $jobOrderTable,
@@ -82,7 +82,8 @@ class OrderController extends AppAbstractRestfulController
         Product $product,
         CustomerTable $customerTable,
         Customer $customer,
-        TokenService $tokenService
+        TokenService $tokenService,
+        OrderService $orderService
     )
     {
      
@@ -105,6 +106,7 @@ class OrderController extends AppAbstractRestfulController
         $this->Customer = $customer;
 
         $this->TokenService = $tokenService;
+        $this->OrderService = $orderService;
 
     }
 
@@ -113,11 +115,32 @@ class OrderController extends AppAbstractRestfulController
         
     public function create($data) 
     {
-        
+    
+
         $this->JobOrder->exchangeArray($data);
         $this->JobOrderFilter->setData($this->JobOrder->getArrayCopy());
        
         if ($this->JobOrderFilter->isValid()) {
+
+
+            // check if CartId matches the customer id
+            $checkoutCart = $this->CartTable->getCart($data['cart_id']);
+            
+            if(!$checkoutCart){
+                return new JsonModel([
+                    'message' => 'Cart does not exist!',
+                    'state' => false
+                ]);
+            }
+
+            if($checkoutCart->customer_id != $this->JobOrder->customer_id) {
+                return new JsonModel([
+                    'message' => 'Invalid cart id, does not match with your credentials.',
+                    'state' => false,
+                    'cart customer id' => $checkoutCart->customer_id
+                ]);
+            }
+
 
             $cartItems = $this->CartItemTable->getByCartId($data['cart_id']);
        
@@ -128,12 +151,15 @@ class OrderController extends AppAbstractRestfulController
             $taxableAmount = 0;
             $shippingTotal = $data['shipping_total'];
             $totalWeight = 0;
+            
             foreach($cartItems as $item){
                 $subTotal += $item['price'] * $item['qty'];
+
                if($item['taxable_flag'] == 'y') {
                    $taxableAmount += $item['price'] * $item['qty'];
                    $tax += ($item['price'] * $item['qty']) * 0.1;
                }
+
                $totalWeight += $item['weight'] * $item['qty'];
             }
 
@@ -141,8 +167,6 @@ class OrderController extends AppAbstractRestfulController
             
             $customer = $this->CustomerTable->getByCustomerId($this->JobOrder->customer_id);
           
-          
-            
             $cartParams = [
                 'cart_id' => $data['cart_id'],
                 'customer_id' => $customer->customer_id,

@@ -50,8 +50,7 @@ class ShippingController extends AppAbstractRestfulController
 
         $totalWeight = 0;
 
-     
-
+    
         //get shipping rates from database
         $ratesTable = $this->shippingTable->getShipping();
         $shippingRates = array();

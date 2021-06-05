@@ -23,4 +23,16 @@ class CartTable
         return $this->tableGateway->update($data, array('cart_id' => $data['cart_id']));
     }
 
+    public function getCart($cartId)
+    {
+        $select = $this->tableGateway->getSql()->select();
+        $select->where(
+            [
+                'cart_id' => $cartId
+            ]
+        );
+
+        return $this->tableGateway->selectWith($select)->current();
+    }
+
 }
