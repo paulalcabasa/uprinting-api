@@ -51,7 +51,7 @@ class AuthController extends AppAbstractRestfulController
         
         $checkCsrf = $this->csrfHelper->verifyCsrfToken(
             $postData['csrfToken'],
-           // 'error token',
+            //'error token',
             $postData['formName']
         );
 

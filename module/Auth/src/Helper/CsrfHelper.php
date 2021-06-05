@@ -65,9 +65,7 @@ EOD;
     public function verifyCsrfToken($csrfToken, $formName)
     {
         try {
-         //   $csrfToken = $request->getHeader('X-XSRF-TOKEN') ?
-             //   $request->getHeader('X-XSRF-TOKEN')->getFieldValue() : '';
-
+    
             if (!$csrfToken) {
                 return false;
             }
