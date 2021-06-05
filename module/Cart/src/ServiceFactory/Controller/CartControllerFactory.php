@@ -18,6 +18,8 @@ use Product\Model\ProductTable;
 
 use Interop\Container\ContainerInterface;
 
+use Cart\Helper\CartIdEncryptionHelper;
+
 class CartControllerFactory
 {
     public function __invoke(ContainerInterface $container)
@@ -33,6 +35,9 @@ class CartControllerFactory
         $productTable = $serviceLocator->get(ProductTable::class);
         $product = $serviceLocator->get(Product::class);
 
+        $cartIdEncryptionHelper = $serviceLocator->get(CartIdEncryptionHelper::class);
+
+
     //    $CartIdFilter = $serviceLocator->get(CartIdFilter::class);
         return new CartController(
             $cartTable,
@@ -42,7 +47,9 @@ class CartControllerFactory
             $cartItem,
         
             $productTable,
-            $product
+            $product,
+
+            $cartIdEncryptionHelper
             
          //   $CartIdFilter
         );

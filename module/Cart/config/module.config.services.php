@@ -15,9 +15,14 @@ use Cart\ServiceFactory\Controller\CartControllerFactory;
 use Cart\Controller\CartItemController;
 use Cart\ServiceFactory\Controller\CartItemControllerFactory;
 
-// use Product\Model\Product;
-// use Product\Model\ProductTable;
-// use Product\ServiceFactory\Model\ProductTableFactory;
+use Product\Model\Product;
+use Product\Model\ProductTable;
+use Product\ServiceFactory\Model\ProductTableFactory;
+
+
+use Cart\Helper\CartIdEncryptionHelper;
+use Cart\ServiceFactory\Helper\CartIdEncryptionHelperFactory;
+
 
 return array(
     'controllers' => [
@@ -35,7 +40,8 @@ return array(
         'factories' => [
             CartTable::class => CartTableFactory::class,
             CartItemTable::class => CartItemTableFactory::class,
-            ProductTable::class => ProductTableFactory::class
+            ProductTable::class => ProductTableFactory::class,
+            CartIdEncryptionHelper::class => CartIdEncryptionHelperFactory::class,
         ]
     ],
     'view_manager' => array(

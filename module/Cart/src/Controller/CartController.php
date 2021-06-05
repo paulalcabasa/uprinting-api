@@ -21,6 +21,8 @@ use Product\Model\ProductTable;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
+use Cart\Helper\CartIdEncryptionHelper;
+
 // use Cart\Filter\CartIdFilter;
 
 class CartController extends AppAbstractRestfulController
@@ -37,6 +39,7 @@ class CartController extends AppAbstractRestfulController
 
     private $CartIdFilter;
 
+    private $CartIdEncryptionHelper;
 
     public function __construct(
         CartTable $cartTable,
@@ -46,7 +49,9 @@ class CartController extends AppAbstractRestfulController
         CartItem $cartItem,
 
         ProductTable $productTable,
-        Product $product
+        Product $product,
+
+        CartIdEncryptionHelper $cartIdEncryptionHelper
     )
     {
         $this->CartTable = $cartTable;
@@ -58,6 +63,7 @@ class CartController extends AppAbstractRestfulController
         $this->ProductTable = $productTable;
         $this->Product = $product;
 
+        $this->CartIdEncryptionHelper = $cartIdEncryptionHelper;
        // $this->CartIdFilter = $cartIdFilter;
     }
     
@@ -151,5 +157,19 @@ class CartController extends AppAbstractRestfulController
 
     }
 
+    public function getList()
+    {
+        $id = 120;
+
+        $encryptedId = $this->CartIdEncryptionHelper->encrypt($id);
+        $decryptedId = $this->CartIdEncryptionHelper->decrypt($encryptedId);
+
+        return new JsonModel([
+            'key' => 'test',
+            'id' => $id,
+            'encrypted' => $encryptedId,
+            'decrypted' => $decryptedId,
+        ]);
+    }
 
 }
